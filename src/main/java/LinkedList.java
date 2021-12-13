@@ -100,7 +100,7 @@ public class LinkedList {
             this.len++;
         }
     }
-
+    //coucou
     /**
      * @return True if the full list is sorted, False otherwise
      */
