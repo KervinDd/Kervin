@@ -1,6 +1,6 @@
 public class LinkedList {
 
-    private Node first; // first second
+    private Node first;
     private Node second;
     private Node tail;
     private int len;
@@ -76,6 +76,7 @@ public class LinkedList {
         this.tail.next = oldFirst;
         this.tail = oldFirst;
         nPops++;
+        if (this.second == null) this.second = tail;
     }
 
     /**

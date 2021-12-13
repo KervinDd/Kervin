@@ -7,6 +7,33 @@ import static org.junit.Assert.*;
 
 
 public class Tests {
+
+    @Test
+    public void testOne(){
+        LinkedList l = new LinkedList(new int[]{7});
+        Sorter.sort(l);
+        assertTrue(l.isSorted());
+
+        l = new LinkedList(new int[]{1,2});
+        Sorter.sort(l);
+        assertTrue(l.isSorted());
+
+        l = new LinkedList(new int[]{2,1});
+        Sorter.sort(l);
+        assertTrue(l.isSorted());
+    }
+
+    @Test
+    public void testThree(){
+        LinkedList l;
+
+        l = new LinkedList(new int[]{1,2,3});
+        Sorter.sort(l);
+        assertEquals(new int[]{1,2,3}, l);
+        assertTrue(l.isSorted());
+
+    }
+
     @Test
     public void testExample(){
         LinkedList l = new LinkedList(new int[]{7, 8, 2, 22, 102, 1});
