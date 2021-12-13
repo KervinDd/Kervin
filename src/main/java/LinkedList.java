@@ -1,6 +1,6 @@
 public class LinkedList {
 
-    private Node first; // first
+    private Node first; // first second
     private Node second;
     private Node tail;
     private int len;
