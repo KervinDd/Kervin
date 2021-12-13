@@ -19,17 +19,15 @@ public class Sorter {
         // although it's not mandatory. Try to respect it, it will help you ;-)
 
         for (int iter = 0; iter < list.getSize() - 1; iter++) {
-            //invariant: the 'iter' biggest elements are at the end of the list and are sorted.
-            //example, at iteration iter=3, the three lasts elements are the three biggest elements in the list, and
-            //they are in the increasing order.
-
-            for (int i = 0; i < list.getSize() - 1 - iter; i++) {
-                if (list.getFirst() > list.getSecond()) list.swap();
+            for (int i = 0; i < list.getSize()-1 ; i++) {
+                if (list.getFirst() > list.getSecond() &&  i < list.getSize() - 1- iter ) {
+                    list.swap();
+                }
                 list.pop();
-
             }
             list.pop();
         }
+
         // here, if you followed the invariant proposed above, the list should be sorted!
     }
 }
