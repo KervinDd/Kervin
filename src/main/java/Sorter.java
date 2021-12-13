@@ -19,15 +19,13 @@ public class Sorter {
         // although it's not mandatory. Try to respect it, it will help you ;-)
 
         for (int iter = 0; iter < list.getSize() - 1; iter++) {
-            for (int i = 0; i < list.getSize()-1 ; i++) {
-                if (list.getFirst() > list.getSecond() &&  i < list.getSize() - 1- iter ) {
+            for (int i = 0; i < list.getSize() - 1 - iter; i++) {
+                if (list.getFirst() > list.getSecond() && i < list.getSize() - 1 - iter) {
                     list.swap();
                 }
                 list.pop();
             }
-            list.pop();
+            for (int j = 0; j < iter+1; j++) list.pop();
         }
-
-        // here, if you followed the invariant proposed above, the list should be sorted!
     }
 }

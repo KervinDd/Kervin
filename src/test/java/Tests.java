@@ -29,9 +29,24 @@ public class Tests {
 
         l = new LinkedList(new int[]{1,2,3});
         Sorter.sort(l);
-        assertEquals(new int[]{1,2,3}, l);
         assertTrue(l.isSorted());
 
+        l = new LinkedList(new int[]{1,3,2});
+        Sorter.sort(l);
+        assertTrue(l.isSorted());
+
+        l = new LinkedList(new int[]{3,1,2});
+        Sorter.sort(l);
+        assertTrue(l.isSorted());
+    }
+
+    @Test
+    public void testFour() {
+        LinkedList l;
+
+        l = new LinkedList(new int[]{1, 2, 3, 4});
+        Sorter.sort(l);
+        assertTrue(l.isSorted());
     }
 
     @Test
