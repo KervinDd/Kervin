@@ -20,7 +20,7 @@ public class Sorter {
 
         for (int iter = 0; iter < list.getSize() - 1; iter++) {
             for (int i = 0; i < list.getSize() - 1 - iter; i++) {
-                if (list.getFirst() > list.getSecond() && i < list.getSize() - 1 - iter) {
+                if (list.getFirst() > list.getSecond()) {
                     list.swap();
                 }
                 list.pop();
