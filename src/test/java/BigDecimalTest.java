@@ -10,7 +10,7 @@ public class BigDecimalTest {
         BigDecimal.parseExp(null, 0, 0);
     }
 
-    public void testArrayException() {
+    public void testArrayException() {//
         assertTrue(assertArrayException(new char[] {}, 0, 0));
         assertTrue(assertArrayException("1.1E1".toCharArray(), 3, 3));
         assertTrue(assertArrayException("1E1".toCharArray(), 1, 3));
@@ -23,14 +23,13 @@ public class BigDecimalTest {
         assertTrue(assertArrayException("1..23E02".toCharArray(), 5, 2));
     }
 
-
     @Test
     public void testNumberException() {
-
         assertTrue(assertNumberException("1E1".toCharArray(), 1, 1));
         assertTrue(assertNumberException("1E1".toCharArray(), 1, 0));
         assertTrue(assertNumberException("1E1".toCharArray(), 1, -1));
         assertTrue(assertNumberException("1E1".toCharArray(), 0, 2));
+        assertTrue(assertNumberException("1E12345123451".toCharArray(), 1, 12));
 
         assertTrue(assertNumberException("1E12345123451".toCharArray(), 3, 1));
         assertTrue(assertNumberException("1E12345678912".toCharArray(), 1, 12));
@@ -68,19 +67,6 @@ public class BigDecimalTest {
         assertEquals(1234567891, BigDecimal.parseExp("1E1234567891".toCharArray(), 1, 11));
 
     }
-
-
-//    @Test
-//        public void test() {
-//            // parameters for parseExp
-//            char[] in = new char[]{/*Some chars here*/};
-//            // you can also use .toCharArray from String class for this:
-//            // char[] in = myString.toCharArray();
-//            int offset = 0/*Some value HERE*/;
-//            int len = 0 /*Some value HERE*/;
-//            // run the program with the given situation
-//            BigDecimal.parseExp(in, offset, len);
-//    }
 
     @Test
     public void bigDecimalTest() {
