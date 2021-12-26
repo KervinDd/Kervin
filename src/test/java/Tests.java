@@ -26,6 +26,7 @@ public class Tests {
     @Test
     public void testThree(){
         LinkedList l;
+        BigDecimal a;
 
         l = new LinkedList(new int[]{1,2,3});
         Sorter.sort(l);
