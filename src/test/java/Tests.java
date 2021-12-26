@@ -8,6 +8,14 @@ import static org.junit.Assert.*;
 
 public class Tests {
 
+
+    @Test
+    public void testLevel(){
+        AbstractLevel aLevel = new Level();
+        Factory factory = new ElementFactory();
+
+    }
+
     @Test
     public void testOne(){
         LinkedList l = new LinkedList(new int[]{7});
