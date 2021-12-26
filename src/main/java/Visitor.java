@@ -1,5 +1,3 @@
-package java;
-
 public interface Visitor {
 
     public int visit(Add visitable);

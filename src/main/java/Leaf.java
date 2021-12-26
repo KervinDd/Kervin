@@ -1,5 +1,3 @@
-package java;
-
 public class Leaf implements Visitable {
     
     // YOUR CODE HERE

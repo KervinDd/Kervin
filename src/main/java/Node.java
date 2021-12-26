@@ -1,5 +1,3 @@
-package java;
-
 abstract class Node {
 
     private Visitable left;
