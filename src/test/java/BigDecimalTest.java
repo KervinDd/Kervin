@@ -10,7 +10,7 @@ public class BigDecimalTest {
         BigDecimal.parseExp(null, 0, 0);
     }
 
-    public void testArrayException() {//
+    public void testArrayException() {
         assertTrue(assertArrayException(new char[] {}, 0, 0));
         assertTrue(assertArrayException("1.1E1".toCharArray(), 3, 3));
         assertTrue(assertArrayException("1E1".toCharArray(), 1, 3));
@@ -19,10 +19,14 @@ public class BigDecimalTest {
         assertTrue(assertArrayException("1E1".toCharArray(), 3, 0));
         assertTrue(assertArrayException("1E12345123451".toCharArray(), 1, 12));
         assertTrue(assertArrayException("1E1".toCharArray(), 3, 3));
+        assertTrue(assertArrayException("1.23-02".toCharArray(), 4, 4));
+        assertTrue(assertArrayException("1..23E02".toCharArray(), 5, 2));
     }
+
 
     @Test
     public void testNumberException() {
+
         assertTrue(assertNumberException("1E1".toCharArray(), 1, 1));
         assertTrue(assertNumberException("1E1".toCharArray(), 1, 0));
         assertTrue(assertNumberException("1E1".toCharArray(), 1, -1));
@@ -30,13 +34,19 @@ public class BigDecimalTest {
 
         assertTrue(assertNumberException("1E12345123451".toCharArray(), 3, 1));
         assertTrue(assertNumberException("1E12345678912".toCharArray(), 1, 12));
-
+        assertTrue(assertNumberException("1.23E-f02".toCharArray(), 4, 4));
+        assertTrue(assertNumberException("1.23EE02".toCharArray(), 4, 4));
+        assertTrue(assertNumberException("1.23-f02".toCharArray(), 4, 4));
+        assertTrue(assertNumberException("1.23-f02".toCharArray(), 4, 2));
 
 
     }
 
     @Test
     public void testSimple() {
+        assertEquals(0, BigDecimal.parseExp("1.23ыE02".toCharArray(), 5, 2));
+        assertEquals(2, BigDecimal.parseExp("1.23ыE02".toCharArray(), 5, 3));
+
         assertEquals(1, BigDecimal.parseExp("1E1".toCharArray(), 1, 2));
         assertEquals(1, BigDecimal.parseExp("1.1E1".toCharArray(), 3, 2));
 
