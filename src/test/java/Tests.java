@@ -21,6 +21,7 @@ public class Tests {
         l = new LinkedList(new int[]{2,1});
         Sorter.sort(l);
         assertTrue(l.isSorted());
+
     }
 
     @Test
