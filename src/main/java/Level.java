@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Level extends AbstractLevel{
+    private Factory factory = ElementFactory.getInstance();
 
     public Level(String input) {
         this.size = input.replace("\n", "").length();
@@ -12,14 +13,14 @@ public class Level extends AbstractLevel{
         int nbLines = input.length() - this.size + 1;
         this.components = new LevelComponent[nbLines][];
 
+
         int lineCount = 0;
         for (String line:  input.split("\n")) {
-            Stream<LevelComponent> components = line.chars().mapToObj(c -> new Wall());
+            Stream<LevelComponent> components = line.chars().mapToObj(c -> factory.getElement((char)c));
             LevelComponent[] row = components.toArray(LevelComponent[]::new);
             this.components[lineCount] = row;
             lineCount ++;
         }
-
     }
 
     @Override
