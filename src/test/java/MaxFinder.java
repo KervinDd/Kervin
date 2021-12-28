@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
+import java.util.function.Consumer;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -58,7 +60,11 @@ public class MaxFinder {
                     .filter(i -> i % nThreads == 0)
                     .forEach(i -> sums[i] = sumMatrix(data[i]));
 
-
+            try {
+                barrier.await();
+            } catch (InterruptedException e) {
+            } catch (BrokenBarrierException e) {
+            }
         }
     }
 
@@ -87,8 +93,11 @@ public class MaxFinder {
         this.width = data[0].length;
         this.depth = data[0][0].length;
         this.sums = new int[nThreads];
-        this.barrier = new CyclicBarrier(nThreads);
 
+        this.barrier = new CyclicBarrier(nThreads, () -> Arrays.stream(sums).max().getAsInt());
+
+        List<Thread> threads = IntStream.range(0, nThreads).mapToObj(Worker::new).map(Thread::new).collect(Collectors.toList());
+        threads.stream().forEach(Thread::start);
 
         // wait until done
         for (Thread thread : threads)
