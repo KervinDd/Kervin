@@ -76,7 +76,12 @@ public class MaxFinder {
      */
     private MaxFinder(int[][][] matrix, int nThreads) throws InterruptedException{
 
-        //TODO by student
+        data = matrix;
+        this.nThreads = nThreads;
+        length = data.length;
+        width = data[0].length;
+        depth = data[0][0].length;
+        sums = new int[nThreads];
 
 
         // wait until done
