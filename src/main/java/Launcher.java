@@ -11,10 +11,15 @@ public class Launcher {
      * "t" array.
      */
     public static Counter[] init(Thread[] t){
-        IntStream.range(0, t.length).forEach(i->t[i] = new Thread(new Counter(), i + ""));
+//        Counter[] counters = Stream.generate(Counter::new).limit(t.length).toArray(Counter[]::new);
 
+        Counter[] counters = new Counter[t.length];
+        for( int i = 0; i< t.length; i++) counters[i] = new Counter();
 
-//        t[0].setName("oli");
-        return Arrays.stream(t).map(s->new Counter()).toArray(Counter[]::new);
+        for( int i = 0; i< t.length; i++) t[i] = new Thread(counters[i], i + "");
+
+        Arrays.stream(t).forEach(Thread::start);
+
+        return counters;
     }
 }
