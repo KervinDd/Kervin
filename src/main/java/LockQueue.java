@@ -18,18 +18,22 @@ public class LockQueue {
 
     public Integer dequeue() {
         lock.lock();
-        while (empty()) {
-            try {
-                notEmpty.await();
-            } catch (InterruptedException e) {
-            }
-        }
-        head++;
-        count--;
+        try {
 
-        notFull.signal();
-        lock.unlock();
-        return cells[head - 1];
+            while (empty()) {
+                try {
+                    notEmpty.await();
+                } catch (InterruptedException e) {
+                }
+            }
+            head++;
+            count--;
+
+            notFull.signal();
+            return cells[(head - 1) % SIZE];
+        } finally {
+            lock.unlock();
+        }
 
     }
 
@@ -37,15 +41,19 @@ public class LockQueue {
     public void enqueue(Integer i) {
 
         lock.lock();
-        while (full()) {
-            try {
-                notFull.await();
-            } catch (InterruptedException e) {}
+        try {
+            while (full()) {
+                try {
+                    notFull.await();
+                } catch (InterruptedException e) {
+                }
+            }
+            tail++;
+            count++;
+            notEmpty.signal();
+        } finally {
+            lock.unlock();
         }
-        tail++;
-        count++;
-        notEmpty.signal();
-        lock.unlock();
     }
 
     public boolean full() {
