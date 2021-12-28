@@ -15,44 +15,30 @@ public class SharedCounterTest {
 
     class SharedCounter {
 
-        private final java.util.concurrent.locks.ReentrantLock lock = new ReentrantLock();
-        private final java.util.concurrent.locks.Condition notZero = lock.newCondition();
-        private final java.util.concurrent.locks.Condition notTop = lock.newCondition();
+//        private final java.util.concurrent.locks.ReentrantLock lock = new ReentrantLock();
+//        private final java.util.concurrent.locks.Condition notZero = lock.newCondition();
+//        private final java.util.concurrent.locks.Condition notTop = lock.newCondition();
 
 
-//        int count = 0;
+        //        int count = 0;
         Deque<Integer> queue = new LinkedList<>();
 
-        public void inc() {
-            lock.lock();
-
+        synchronized public void inc() throws InterruptedException {
             while (queue.size() == 2) {
-                try {
-                    notTop.await();
-                } catch (InterruptedException e) {
-                }
+                wait();
             }
 
-//            count++;
             queue.push(1);
-            notZero.signal();
-            lock.unlock();
+            notify();
         }
 
-        public void dec() {
-            lock.lock();
-
+        synchronized public void dec() throws InterruptedException {
             while (queue.size() == 0) {
-                try {
-                    notZero.await();
-                } catch (InterruptedException e) {
-                }
+                wait();
             }
 
-//            count--;
             queue.pop();
-            notTop.signal();
-            lock.unlock();
+            notify();
         }
 
         Deque<Integer> get() {
@@ -67,45 +53,60 @@ public class SharedCounterTest {
         SharedCounter counter = new SharedCounter();
 
 
+        Runnable inc = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    counter.inc();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        Runnable dec = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    counter.dec();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
         List<Thread> list = List.of(
-                new Thread(() -> counter.inc()),
-                new Thread(() -> counter.dec()),
-                new Thread(() -> counter.dec()),
-                new Thread(() -> counter.inc()),
-                new Thread(() -> counter.inc()));
+                new Thread(inc),
+                new Thread(dec),
+                new Thread(dec),
+                new Thread(inc),
+                new Thread(inc));
 
         list.stream().forEach(Thread::start);
         for (Thread thread : list) {
             thread.join();
         }
 
-
         assertEquals(1, counter.get().size());
 
-        SharedCounter counter2 = new SharedCounter();
+
+        System.out.println("----------");
+
+        counter.queue = new LinkedList<>();
         list = List.of(
-                new Thread(() -> counter2.inc()),
-                new Thread(() -> counter2.dec()),
-                new Thread(() -> counter2.dec()),
-                new Thread(() -> counter2.inc()),
-                new Thread(() -> counter2.inc()),
-                new Thread(() -> counter2.inc()),
-                new Thread(() -> counter2.inc()),
-                new Thread(() -> counter2.inc()),
-                new Thread(() -> counter2.inc()),
-                new Thread(() -> counter2.dec()),
-                new Thread(() -> counter2.dec()),
-                new Thread(() -> counter2.dec()),
-                new Thread(() -> counter2.dec()),
-                new Thread(() -> counter2.dec()),
-                new Thread(() -> counter2.inc()));
+                new Thread(inc),
+                new Thread(inc),
+                new Thread(inc),
+                new Thread(dec),
+                new Thread(dec)
+        );
 
 
-                list.stream().forEach(Thread::start);
+        list.stream().forEach(Thread::start);
         for (Thread thread : list) {
             thread.join();
         }
-        assertEquals(1, counter2.get().size());
+        assertEquals(1, counter.get().size());
 
     }
 

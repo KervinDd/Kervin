@@ -1,8 +1,11 @@
+import org.junit.Test;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
+import java.util.stream.Stream;
 
 public class MaxFinder {
 
@@ -36,12 +39,12 @@ public class MaxFinder {
     class Worker implements Runnable {
         int x;
 
+        static int sumVector(int[] vec) {
+            return Arrays.stream(vec).sum();
+        }
+
         static int sumMatrix(int[][] mat)  {
-            for(int i = 0; i<mat.length){
-                Arrays.stream.sum(mat[i])
-
-            }
-
+            return  Arrays.stream(mat).map(Worker::sumVector).mapToInt(i->i).sum();
         }
 
         public Worker(int x) {
@@ -92,6 +95,12 @@ public class MaxFinder {
         }catch(InterruptedException e){
             return -1;
         }
+
+    }
+
+
+    @Test
+    public void test1(){
 
     }
 }
