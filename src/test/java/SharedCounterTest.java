@@ -2,6 +2,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+import java.util.List;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -13,12 +14,21 @@ public class SharedCounterTest {
 
         private final java.util.concurrent.locks.ReentrantLock lock = new ReentrantLock();
         private final java.util.concurrent.locks.Condition notZero = lock.newCondition();
+        private final java.util.concurrent.locks.Condition notTop = lock.newCondition();
 
 
-        int count = 1;
+        int count = 0;
 
         public void inc() {
             lock.lock();
+
+            while (count == 2) {
+                try {
+                    notTop.await();
+                } catch (InterruptedException e) {
+                }
+            }
+
             count++;
             notZero.signal();
             lock.unlock();
@@ -35,6 +45,7 @@ public class SharedCounterTest {
             }
 
             count--;
+            notTop.signal();
             lock.unlock();
         }
 
@@ -46,24 +57,49 @@ public class SharedCounterTest {
     }
 
     @Test
-    public void test1() {
+    public void test1() throws InterruptedException {
         SharedCounter counter = new SharedCounter();
 
 
-        Thread t = new Thread(() -> counter.inc(), "inc1");
-        Thread s = new Thread(() -> counter.dec(), "dec1");
-        Thread s2 = new Thread(() -> counter.dec(), "dec2");
-        Thread s3 = new Thread(() -> counter.inc(), "inc2");
+        List<Thread> list = List.of(
+                new Thread(() -> counter.inc()),
+                new Thread(() -> counter.dec()),
+                new Thread(() -> counter.dec()),
+                new Thread(() -> counter.inc()),
+                new Thread(() -> counter.inc()));
+
+        list.stream().forEach(Thread::start);
+        for (Thread thread : list) {
+            thread.join();
+        }
 
 
+        assertEquals(1, counter.get());
 
-        t.start();
-        s.start();
-        s2.start();
-        s3.start();
+        SharedCounter counter2 = new SharedCounter();
+        list = List.of(
+                new Thread(() -> counter2.inc()),
+                new Thread(() -> counter2.dec()),
+                new Thread(() -> counter2.dec()),
+                new Thread(() -> counter2.inc()),
+                new Thread(() -> counter2.inc()),
+                new Thread(() -> counter2.inc()),
+                new Thread(() -> counter2.inc()),
+                new Thread(() -> counter2.inc()),
+                new Thread(() -> counter2.inc()),
+                new Thread(() -> counter2.dec()),
+                new Thread(() -> counter2.dec()),
+                new Thread(() -> counter2.dec()),
+                new Thread(() -> counter2.dec()),
+                new Thread(() -> counter2.dec()),
+                new Thread(() -> counter2.inc()));
 
 
-        assertEquals(0, counter.get());
+                list.stream().forEach(Thread::start);
+        for (Thread thread : list) {
+            thread.join();
+        }
+        assertEquals(1, counter2.get());
 
     }
 
