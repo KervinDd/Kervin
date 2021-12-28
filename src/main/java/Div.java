@@ -1,3 +1,5 @@
 public class Div extends Node implements Visitable {
-    // YOUR CODE HERE
+    public Div(Visitable left, Visitable right) {
+        super(left, right);
+    }
 }

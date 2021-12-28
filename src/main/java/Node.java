@@ -1,4 +1,4 @@
-abstract class Node {
+class Node implements Visitable {
 
     private Visitable left;
     private Visitable right;
@@ -14,6 +14,11 @@ abstract class Node {
 
     public Visitable getRight() {
         return right;
+    }
+
+    @Override
+    public int accept(Visitor visitor) {
+        return visitor.visit(this);
     }
 
 }

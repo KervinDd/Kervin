@@ -1,8 +1,17 @@
 public class Leaf implements Visitable {
-    
-    // YOUR CODE HERE
+
+    int val;
+
+    @Override
+    public int accept(Visitor visitor) {
+        return val;
+    }
+
+    public Leaf(int s) {
+            this.val = s;
+    }
 
     public int getValue() {
-        // YOUR CODE HERE
+        return this.val;
     }
 }

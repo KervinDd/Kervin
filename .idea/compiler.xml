@@ -6,7 +6,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="LEPL1402_MidTermQuiz" />
+        <module name="Java exercices" />
       </profile>
     </annotationProcessing>
   </component>
