@@ -12,30 +12,49 @@ public class LockQueue {
 
     public int head = 0;
     public int tail = 0;
-    public final Integer [] cells = new Integer[SIZE];
+    public final Integer[] cells = new Integer[SIZE];
     public int count = 0;
 
 
-
     public Integer dequeue() {
-        //TODO YOUR CODE HERE
-        return 0;
+        lock.lock();
+        while (empty()) {
+            try {
+                notEmpty.await();
+            } catch (InterruptedException e) {
+            }
+        }
+        head++;
+
+        notFull.signal();
+        return cells[head - 1];
     }
 
 
     public void enqueue(Integer i) {
-        //TODO YOUR CODE HERE
 
+        lock.lock();
+        while (full()) {
+            try {
+                notFull.await();
+            } catch (InterruptedException e) {
+            }
+        }
+        tail++;
+        count++;
+        notEmpty.signal();
     }
 
-    public boolean full(){
+    public boolean full() {
         return this.count == SIZE;
     }
 
-    public boolean empty(){
+    public boolean empty() {
         return this.head == this.tail;
     }
 
-    public int size() { return this.tail - this.head; }
+    public int size() {
+        return this.tail - this.head;
+    }
 
 }
