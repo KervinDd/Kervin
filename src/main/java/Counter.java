@@ -18,6 +18,7 @@ public class Counter implements Runnable {
 
     @Override
     public void run() {
+        System.out.println("ploc");
         for(int i=0; i< getRnd(); i++){
             count += 1;
         }

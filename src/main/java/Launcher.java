@@ -1,3 +1,6 @@
+import java.util.Arrays;
+import java.util.stream.Stream;
+
 public class Launcher {
 
     /*
@@ -7,7 +10,6 @@ public class Launcher {
      * "t" array.
      */
     public static Counter[] init(Thread[] t){
-       t[0].start();
-
+        return Arrays.stream(t).map(s->new Counter()).toArray(Counter[]::new);
     }
 }

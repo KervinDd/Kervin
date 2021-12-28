@@ -1,5 +1,6 @@
 
 import org.junit.Test;
+import org.w3c.dom.ls.LSOutput;
 
 import java.util.*;
 
@@ -7,9 +8,31 @@ import static org.junit.Assert.*;
 
 
 public class Tests {
-    
 
 
+
+    @Test
+    public void test1() {
+        System.out.println(Thread.currentThread().getName());
+        for(int i=0; i<10; i++){
+            new Thread("" + i){
+                public void run(){
+                    System.out.println("Thread: " + getName() + " running");
+                }
+            }.start();
+        }
+    }
+
+    @Test
+    public void testThread() throws  Exception {
+        Runnable s = () -> System.out.println("thread bonjour");
+        Thread t = new Thread(s);
+        t.start();
+        t.join();
+        System.out.println("Main therad. Bonjour");
+
+
+    }
 
     @Test
     public void testOne(){

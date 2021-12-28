@@ -20,6 +20,7 @@ public class Level extends AbstractLevel{
             LevelComponent[] row = components.toArray(LevelComponent[]::new);
             this.components[lineCount] = row;
             lineCount ++;
+
         }
     }
 
