@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class MaxFinder {
@@ -52,7 +53,11 @@ public class MaxFinder {
         }
 
         @Override
-        public void run() {
+        public void run()  {
+            IntStream.range(0, length)
+                    .filter(i -> i % nThreads == 0)
+                    .forEach(i -> sums[i] = sumMatrix(data[i]));
+
 
         }
     }
