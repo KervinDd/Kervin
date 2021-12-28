@@ -82,6 +82,7 @@ public class MaxFinder {
         this.width = data[0].length;
         this.depth = data[0][0].length;
         this.sums = new int[nThreads];
+        this.barrier = new CyclicBarrier(nThreads);
 
 
         // wait until done
