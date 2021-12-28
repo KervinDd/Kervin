@@ -7,8 +7,7 @@ public class Launcher {
      * "t" array.
      */
     public static Counter[] init(Thread[] t){
-      //TODO YOUR CODE HERE
-        return null;
+       t[0].start();
 
     }
 }
