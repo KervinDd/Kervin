@@ -47,7 +47,7 @@ public class MaxFinder {
         }
 
         static int sumMatrix(int[][] mat)  {
-            return  Arrays.stream(mat).map(Worker::sumVector).mapToInt(i->i).sum();
+            return Arrays.stream(mat).flatMapToInt(x -> Arrays.stream(x)).sum();
         }
 
         public Worker(int x) {
