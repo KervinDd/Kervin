@@ -10,7 +10,7 @@ public class Launcher {
      * the threads ran on. Each thread must be named according to its index in the
      * "t" array.
      */
-    public static Counter[] init(Thread[] t){
+    public static Counter[] init(Thread[] t) {
 //        Counter[] counters = Stream.generate(Counter::new).limit(t.length).toArray(Counter[]::new);
 
         Counter[] counters = new Counter[t.length];
@@ -19,6 +19,14 @@ public class Launcher {
         for( int i = 0; i< t.length; i++) t[i] = new Thread(counters[i], i + "");
 
         Arrays.stream(t).forEach(Thread::start);
+
+
+        Arrays.stream(t).forEach(s ->{
+            try {
+                s.join();}
+            catch (InterruptedException e) {}
+        } );
+
 
         return counters;
     }
