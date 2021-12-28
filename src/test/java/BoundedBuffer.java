@@ -21,8 +21,7 @@ public class BoundedBuffer {
      * Mechanics of getting the first element of the buffer
      */
     private Integer doTake(){
-        //TODO
-    }
+return null;    }
 
     private boolean isFull(){
         return this.data.length == this.size;
@@ -45,8 +44,7 @@ public class BoundedBuffer {
      * if the buffer is empty, the thread waits until an element arrives
      */
     public synchronized Integer take() throws InterruptedException{
-        //TODO
-    }
+return null;    }
 
     /*
      * put x on the buffer if the buffer is not full
@@ -56,7 +54,7 @@ public class BoundedBuffer {
      * return false if an exception occurs
      */
     public synchronized boolean offer(Integer x, long ms){
-        //TODO
+        return true;
     }
 
     /*
@@ -65,7 +63,7 @@ public class BoundedBuffer {
      * if the delay is exceeded or an exception occurs return null
      */
     public synchronized Integer poll(long ms){
-        //TODO
+        return null;
     }
 
 

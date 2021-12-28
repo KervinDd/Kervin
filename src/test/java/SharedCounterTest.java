@@ -2,7 +2,10 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+import java.util.Deque;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -17,19 +20,21 @@ public class SharedCounterTest {
         private final java.util.concurrent.locks.Condition notTop = lock.newCondition();
 
 
-        int count = 0;
+//        int count = 0;
+        Deque<Integer> queue = new LinkedList<>();
 
         public void inc() {
             lock.lock();
 
-            while (count == 2) {
+            while (queue.size() == 2) {
                 try {
                     notTop.await();
                 } catch (InterruptedException e) {
                 }
             }
 
-            count++;
+//            count++;
+            queue.push(1);
             notZero.signal();
             lock.unlock();
         }
@@ -37,20 +42,21 @@ public class SharedCounterTest {
         public void dec() {
             lock.lock();
 
-            while (count == 0) {
+            while (queue.size() == 0) {
                 try {
                     notZero.await();
                 } catch (InterruptedException e) {
                 }
             }
 
-            count--;
+//            count--;
+            queue.pop();
             notTop.signal();
             lock.unlock();
         }
 
-        int get() {
-            return count;
+        Deque<Integer> get() {
+            return queue;
         }
 
 
@@ -74,7 +80,7 @@ public class SharedCounterTest {
         }
 
 
-        assertEquals(1, counter.get());
+        assertEquals(1, counter.get().size());
 
         SharedCounter counter2 = new SharedCounter();
         list = List.of(
@@ -99,7 +105,7 @@ public class SharedCounterTest {
         for (Thread thread : list) {
             thread.join();
         }
-        assertEquals(1, counter2.get());
+        assertEquals(1, counter2.get().size());
 
     }
 
