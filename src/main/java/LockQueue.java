@@ -25,9 +25,12 @@ public class LockQueue {
             }
         }
         head++;
+        count--;
 
         notFull.signal();
+        lock.unlock();
         return cells[head - 1];
+
     }
 
 
@@ -37,12 +40,12 @@ public class LockQueue {
         while (full()) {
             try {
                 notFull.await();
-            } catch (InterruptedException e) {
-            }
+            } catch (InterruptedException e) {}
         }
         tail++;
         count++;
         notEmpty.signal();
+        lock.unlock();
     }
 
     public boolean full() {
