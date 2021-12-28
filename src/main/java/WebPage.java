@@ -3,6 +3,7 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
+import java.util.stream.Collectors;
 
 public class WebPage {
 
@@ -36,7 +37,7 @@ public class WebPage {
      * Load all images of the page
      */
     public List<Future<Image>> loadImages(List<URL> urls){
-        return null ;
+        return urls.stream().map(this::loadImage).collect(Collectors.toList());
     }
 
     /*

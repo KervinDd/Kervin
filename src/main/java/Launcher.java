@@ -19,6 +19,11 @@ public class Launcher {
         for( int i = 0; i< t.length; i++) t[i] = new Thread(counters[i], i + "");
 
         Arrays.stream(t).forEach(Thread::start);
+        try {
+            for (Thread thread : t) {
+                thread.join();
+            }
+        }catch (InterruptedException e) {};
 
         return counters;
     }
