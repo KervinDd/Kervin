@@ -8,12 +8,19 @@ public class TestLauncher {
 
     @Test
     public void test() {
-        Counter[] counters = Launcher.init(new Thread[]{});
+
+        Thread[] t = {};
+        Counter[] counters = Launcher.init(t);
         assertEquals(0, counters.length);
 
+        t = new Thread[]{new Thread()};
+        counters = Launcher.init(t);
+        assertEquals("0", t[0].getName());
 
-        counters = Launcher.init(new Thread[]{new Thread(new Counter())});
-        assertEquals(1, counters.length);
+        t = new Thread[]{new Thread(), new Thread()};
+        counters = Launcher.init(t);
+        assertEquals("0", t[0].getName());
+        assertEquals("1", t[1].getName());
     }
 }
 

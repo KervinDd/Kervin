@@ -1,4 +1,5 @@
 import java.util.Arrays;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class Launcher {
@@ -10,6 +11,10 @@ public class Launcher {
      * "t" array.
      */
     public static Counter[] init(Thread[] t){
+        IntStream.range(0, t.length).forEach(i->t[i] = new Thread(new Counter(), i + ""));
+
+
+//        t[0].setName("oli");
         return Arrays.stream(t).map(s->new Counter()).toArray(Counter[]::new);
     }
 }
