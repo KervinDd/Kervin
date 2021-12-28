@@ -13,7 +13,7 @@ public class WebPage {
      * Bound executor to a fixed thread pool size
      */
     public WebPage(int threadNumber, HTML html){
-        //TODO
+        return ;
     }
 
     /*
@@ -21,7 +21,7 @@ public class WebPage {
      * to be executed by thread pool
      */
     public Future<Image> loadImage(URL url){
-        //TODO
+        return null;
     }
 
     /*
@@ -29,13 +29,14 @@ public class WebPage {
      */
     public Image downloadImageFromURL(URL url){
         //HIDDEN
+        return null;
     }
 
     /*
      * Load all images of the page
      */
     public List<Future<Image>> loadImages(List<URL> urls){
-        //TODO
+        return null ;
     }
 
     /*

@@ -8,5 +8,7 @@ public class Launcher {
      */
     public static Counter[] init(Thread[] t){
       //TODO YOUR CODE HERE
+        return null;
+
     }
 }
