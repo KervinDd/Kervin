@@ -63,7 +63,7 @@ public class ParallelMergeSort<E> extends RecursiveAction {
         int j = mid + 1;
 
         for (int ind = lo; ind <= hi; ind++) {
-            if (i<=mid && ( j > hi || comp.compare(array[i],(array[j])) <= 0 )){
+            if (i<=mid && ( j > hi || comp.compare(array[i],array[j]) <= 0 )){
                 aux[ind] = array[i];
                 i++;
             } else if(j <= hi) {
@@ -87,3 +87,22 @@ public class ParallelMergeSort<E> extends RecursiveAction {
 //}
 //ParallelMergeSort task = new ParallelMergeSort(array, 0, size-1, new Integer[size],Comparator.comparing(Integer::intValue));
 //new ForkJoinPool().invoke(task);
+
+
+    // Store the ordered elements in `aux`
+    //int auxid = lo, i = lo, j = mid+1;
+       // while(auxid <= hi) {
+              //  if(i <= mid && j <= hi) {
+               // if(comp.compare(array[j], array[i]) > 0) {
+              //  aux[auxid++] = array[i++];
+              //  } else {
+                //aux[auxid++] = array[j++];
+               // }
+               // } else if(i <= mid) {
+               // aux[auxid++] = array[i++];
+                //} else {
+                //aux[auxid++] = array[j++];
+                //}
+                //}
+                // Copy the relevant part of `aux` into `a`
+               // System.arraycopy(aux, lo, array, lo, hi-lo+1);
