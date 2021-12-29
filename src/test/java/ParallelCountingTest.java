@@ -4,10 +4,40 @@ import org.junit.Test;
 import java.util.Optional;
 
 public class ParallelCountingTest {
+
+    @Test
+    public void testk(){
+
+        Optional<float[]> absent = Optional.empty();
+        Assert.assertEquals(0,ParallelCounting.parallelCount(absent, 0.1f, 1));
+
+        Assert.assertEquals(0,ParallelCounting.parallelCount(Optional.of(new float[0]), 0.1f, 1));
+        Assert.assertEquals(0,ParallelCounting.parallelCount(Optional.of(new float[]{0.1f}), 0.3f, 1));
+        Assert.assertEquals(1,ParallelCounting.parallelCount(Optional.of(new float[]{0.3f}), 0.3f, 1));
+        Assert.assertEquals(2,ParallelCounting.parallelCount(Optional.of(new float[]{0.3f,0.2f,0.3f}), 0.3f, 1));
+
+        Assert.assertEquals(2,ParallelCounting.parallelCount(Optional.of(new float[]{0.3f,0.2f,0.3f}), 0.3f, 2));
+    }
+
+    @Test
+    public void testlongARR() {
+        float[] values = new float[] {4.5f,3.2f,5.0f,6.6f,7.2f,1.5f,3.7f,5.8f,6.0f,9.0f,1.3f,2.3f,4.5f,1.5f};
+        float[] values2 = new float[1000* values.length];
+        for (int i = 0; i < values2.length; i++)  values2[i] = values[ i % values.length];
+        Assert.assertEquals(2000,ParallelCounting.parallelCount(Optional.of(values2),4.5f, 2));
+    }
+
+
+
+
+
+
     @Test
     public void test1() {
+
+
         float[] values = new float[] {4.5f,3.2f,5.0f,6.6f,7.2f,1.5f,3.7f,5.8f,6.0f,9.0f,1.3f,2.3f,4.5f,1.5f};
-        Assert.assertEquals(2,ParallelCounting.parallelCount(Optional.of(values),4.5f,2));
+        Assert.assertEquals(2,ParallelCounting.parallelCount(Optional.of(values),4.5f, 10));
     }
 
     @Test
