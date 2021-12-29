@@ -35,5 +35,9 @@ public class ParallelMergeSortTest {
         threadPool.invoke(new ParallelMergeSort<Integer>(a, 0, a.length-1, new Integer[a.length], comp));
         assertArrayEquals(new Integer[] {1,2,3,4}, a);
 
+        a = new Integer[] {1,3,2, 4, 6, 5};
+        threadPool.invoke(new ParallelMergeSort<Integer>(a, 0, a.length-1, new Integer[a.length], comp));
+        assertArrayEquals(new Integer[] {1,2,3,4,5,6}, a);
+
     }
 }
