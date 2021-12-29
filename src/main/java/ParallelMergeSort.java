@@ -33,14 +33,19 @@ public class ParallelMergeSort<E> extends RecursiveAction {
             return;
         }
         int mid =  (hi+lo) >>> 1;
-        invokeAll(new ParallelMergeSort<E>(array, lo ,mid, aux, comp),new ParallelMergeSort<E>(array, mid, hi, aux, comp));
+        invokeAll(new ParallelMergeSort<E>(array, lo ,mid, aux, comp),
+                new ParallelMergeSort<E>(array, mid + 1, hi, aux, comp));
         merge(lo,mid,hi);
-
     }
 
 	//Sort array between lo and hi using merge sort
     private void sort(int lo, int hi){
-       return;
+        if(hi-lo < 1) return;
+       if( comp.compare(array[hi], array[lo]) <=0) {
+           E temp = array[hi];
+           array[hi] = array[lo];
+           array[lo] = temp;
+       }
     }
 
     //merge two subarray and keep them sorted
@@ -49,7 +54,7 @@ public class ParallelMergeSort<E> extends RecursiveAction {
         int j = mid + 1;
 
         for (int ind = lo; ind <= hi; ind++) {
-            if (i<=mid && ( j > hi || comp.compare(array[i],(array[j])) >= 0 )){
+            if (i<=mid && ( j > hi || comp.compare(array[i],(array[j])) <= 0 )){
                 aux[ind] = array[i];
                 i++;
             } else if(j <= hi) {
@@ -58,7 +63,9 @@ public class ParallelMergeSort<E> extends RecursiveAction {
             }
         }
 
-
+        for (int k = 0; k < array.length; k++) {
+            array[k] = aux[k];
+        }
     }
 
 }
