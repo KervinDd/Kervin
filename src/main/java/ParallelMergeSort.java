@@ -40,16 +40,16 @@ public class ParallelMergeSort<E> extends RecursiveAction {
 
     //Sort array between lo and hi using merge sort
     private void sort(int lo, int hi) {
-        if (hi - lo < 1) return;
-        if (hi - lo < 2) {
-            if (comp.compare(array[hi], array[lo]) <= 0) {
-                E temp = array[hi];
-                array[hi] = array[lo];
-                array[lo] = temp;
-
-            }
-            return;
-        }
+//        if (hi - lo < 1) return;
+//        if (hi - lo < 2) {
+//            if (comp.compare(array[hi], array[lo]) <= 0) {
+//                E temp = array[hi];
+//                array[hi] = array[lo];
+//                array[lo] = temp;
+//
+//            }
+//            return;
+//        }
 
 
         if (hi - lo > 0) {
@@ -66,7 +66,7 @@ public class ParallelMergeSort<E> extends RecursiveAction {
         int j = mid + 1;
 
         for (int ind = lo; ind <= hi; ind++) {
-            if (i <= mid && (j > hi || comp.compare(array[i], (array[j])) <= 0)) {
+            if (i <= mid && (j > hi || comp.compare(array[i], array[j]) <= 0)) {
                 aux[ind] = array[i];
                 i++;
             } else if (j <= hi) {
@@ -75,7 +75,7 @@ public class ParallelMergeSort<E> extends RecursiveAction {
             }
         }
 
-        for (int k = 0; k < array.length; k++) {
+        for (int k = lo; k <= hi; k++) {
             array[k] = aux[k];
         }
     }
