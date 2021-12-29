@@ -11,7 +11,7 @@ import java.util.stream.IntStream;
  */
 
 public class ParallelCounting {
-    class Task extends
+
 
     static ExecutorService executor = Executors.newFixedThreadPool(1000);
     /**
