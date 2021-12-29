@@ -1,3 +1,4 @@
+import java.util.Optional;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.stream.IntStream;
 public class ParallelCounting {
 
 
-    static ExecutorService executor = Executors.newFixedThreadPool(1000);
+
     /**
      * Return the number of values equal to v using a parallel algorithm.
      *
@@ -31,6 +32,7 @@ public class ParallelCounting {
      * Try to give all threads more or less the same amount of work!
      */
     public static int parallelCount (Optional<float[]> values, float v, int nThreads) {
+        ExecutorService executor = Executors.newFixedThreadPool(1000);
         if (!values.isPresent()) return 0;
 
         List<Integer> list = new ArrayList<>();
@@ -50,8 +52,9 @@ public class ParallelCounting {
 
     }
 
-     static Callable<Integer> getCallable(int i,float[] val,  int nThreads, float v){
+    static Callable<Integer> getCallable(int i,float[] val,  int nThreads, float v){
         return () -> (int) IntStream.range(0, val.length)
                 .filter(j -> j % nThreads == i).mapToDouble(j -> val[j]).filter(f -> f == v).count();
-     }
+    }
+
 }
