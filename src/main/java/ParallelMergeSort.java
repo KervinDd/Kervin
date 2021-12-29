@@ -28,7 +28,7 @@ public class ParallelMergeSort<E> extends RecursiveAction {
     @Override
     protected void compute() {
 
-        if(hi-lo < 2){
+        if(hi-lo < threshold){
             sort(lo,hi);
             return;
         }
@@ -40,12 +40,21 @@ public class ParallelMergeSort<E> extends RecursiveAction {
 
 	//Sort array between lo and hi using merge sort
     private void sort(int lo, int hi){
-        if(hi-lo < 1) return;
-       if( comp.compare(array[hi], array[lo]) <=0) {
-           E temp = array[hi];
-           array[hi] = array[lo];
-           array[lo] = temp;
-       }
+        //if(hi-lo < 1) return;
+       //if( comp.compare(array[hi], array[lo]) <=0) {
+      //     E temp = array[hi];
+      //     array[hi] = array[lo];
+      //     array[lo] = temp;
+      // }
+
+
+
+        if (hi - lo > 0) {
+            int mid = (lo + hi) / 2;
+            sort(lo, mid);
+            sort(mid + 1, hi);
+            merge(lo, mid, hi);
+        }
     }
 
     //merge two subarray and keep them sorted
